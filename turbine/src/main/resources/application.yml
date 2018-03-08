@@ -1,0 +1,25 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: turbine
+
+eureka:  
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: false
+    lease:
+      duration: 5 
+
+
+turbine:
+ aggregator:  
+   clusterConfig: default  
+   clusterNameExpression: new String("default")  
+   appConfig: google
+   combineHostPort: true
+   instanceUrlSuffix:
+     SERVICE: hystrix:8081/hystrix.stream
