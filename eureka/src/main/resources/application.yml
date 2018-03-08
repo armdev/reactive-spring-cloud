@@ -11,6 +11,12 @@ server:
   
 
 eureka:
+  instance:
+    prefer-ip-address: true  
+    leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 3
+    #metadata-map:
+       #cluster: MAIN
   client:
     registerWithEureka: false
     fetchRegistry: false

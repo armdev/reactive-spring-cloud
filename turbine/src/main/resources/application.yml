@@ -16,10 +16,8 @@ eureka:
 
 
 turbine:
- aggregator:  
-   clusterConfig: default  
-   clusterNameExpression: new String("default")  
-   appConfig: google
-   combineHostPort: true
-   instanceUrlSuffix:
-     SERVICE: hystrix:8081/hystrix.stream
+ cluster-name-expression: new String("default") 
+ app-config: google
+ combine-host-port: true
+ aggregator:      
+   cluster-config: default
