@@ -19,5 +19,6 @@ turbine:
  cluster-name-expression: new String("default") 
  app-config: google
  combine-host-port: true
+ #instanceUrlSuffix: hystrix/hystrix.stream
  aggregator:      
    cluster-config: default

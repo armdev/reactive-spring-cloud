@@ -5,12 +5,14 @@
  */
 package io.project.google;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.reactivestreams.Publisher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.netflix.hystrix.HystrixCommands;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 /**
  *
@@ -22,14 +24,19 @@ public class BackService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BackService.class);
 
-    @HystrixCommand(fallbackMethod = "findSecondary")
-    public String findPrimary() {
-        LOGGER.info("IllegalArgumentException  ");
-        throw new IllegalArgumentException();
+    //@HystrixCommand(fallbackMethod = "findSecondary")
+    public Publisher<String> justDoIt() {
+        Publisher<String> ret = HystrixCommands.from(Flux.from(findPrimary())).commandName("findSecondary")
+                .fallback((findSecondary())).build();
+        return ret;
     }
 
-    public String findSecondary() {
+    public Flux<String> findPrimary() {
+        return Flux.error(new Error());
+    }
+
+    public Publisher<String> findSecondary() {
         LOGGER.info("Request again failed ");
-        return "SecondaryJson";
+        return Flux.just("HMMM, Error");
     }
 }

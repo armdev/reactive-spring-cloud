@@ -5,6 +5,7 @@
  */
 package io.project.google;
 
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 /**
  *
@@ -27,8 +29,8 @@ public class HystrixController {
     private BackService backService;
 
     @GetMapping("/find")
-    public String findPrimary() {
-        return backService.findPrimary();
+    public Publisher<String> findPrimary() {
+        return backService.justDoIt();
     }
 
 }
